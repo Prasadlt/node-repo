@@ -54,9 +54,9 @@ stages:
       pool: nodepool
       steps:
       - task: DownloadPipelineArtifact@1
-          inputs:
-            downloadPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-            
+        inputs:
+          downloadPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+
     - task: AzureWebApp@1
         displayName: Azure Web App Deploy
         inputs:
