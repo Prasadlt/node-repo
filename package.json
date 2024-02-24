@@ -1,22 +1,22 @@
 {
-  "name": "simple-nodejs-app",
+  "name": "node-repo",
   "version": "1.0.0",
   "description": "Research about a person",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node node-repo/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rat9615/simple-nodejs-app.git"
+    "url": "git+https://github.com/rat9615/node-repo.git"
   },
   "author": "Rohan R",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rat9615/simple-nodejs-app/issues"
+    "url": "https://github.com/rat9615/node-repo/issues"
   },
-  "homepage": "https://github.com/rat9615/simple-nodejs-app#readme",
+  "homepage": "https://github.com/rat9615/node-repo#readme",
   "dependencies": {
     "ejs": "^3.1.7",
     "express": "^4.17.3",
