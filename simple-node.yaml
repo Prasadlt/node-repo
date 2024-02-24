@@ -57,12 +57,12 @@ stages:
         inputs:
           downloadPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
 
-    - task: AzureWebApp@1
-        displayName: Azure Web App Deploy
-        inputs:
-          azureSubscription: 'test-connection'
-          appType: 'webApp'
-          appName: 'nodeapppd'
-          runtimeStack: 'NODE|10.10'
-          package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-          startUpCommand: 'npm run start'
+      - task: AzureWebApp@1
+          displayName: Azure Web App Deploy
+          inputs:
+            azureSubscription: 'test-connection'
+            appType: 'webApp'
+            appName: 'nodeapppd'
+            runtimeStack: 'NODE|10.10'
+            package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+            startUpCommand: 'npm run start'
