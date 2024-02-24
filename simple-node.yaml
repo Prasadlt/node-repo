@@ -38,12 +38,12 @@ stages:
           archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
           replaceExistingArchive: true
           
-      - task: PublishPipelineArtifact@0
-        inputs:
-          targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      # - task: PublishPipelineArtifact@0
+      #   inputs:
+      #     targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
 
-      # - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      #   artifact: drop
+      - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        artifact: drop
 
 - stage: Deploy
   displayName: Deploy stage
@@ -53,9 +53,9 @@ stages:
       displayName: Deploy
       pool: nodepool
       steps:
-      - task: DownloadPipelineArtifact@1
-        inputs:
-          downloadPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      # - task: DownloadPipelineArtifact@1
+      #   inputs:
+      #     downloadPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
 
       - task: AzureWebApp@1
         displayName: Azure Web App Deploy
@@ -64,5 +64,6 @@ stages:
           appType: 'webApp'
           appName: 'nodeapppd'
           runtimeStack: 'NODE|10.10'
-          package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          #package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
           startUpCommand: 'npm run start'
