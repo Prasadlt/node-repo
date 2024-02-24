@@ -1,0 +1,63 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- none
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs: 
+    - job: Build
+      displayName: Build
+      pool: nodepool
+
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '18.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          npm install
+        displayName: 'npm install and build'
+
+      # - task: ArchiveFiles@2
+      #   inputs:
+      #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      #     includeRootFolder: false
+
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
+          
+      # - task: PublishPipelineArtifact@0
+      #   inputs:
+      #     targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+
+      - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        artifact: drop
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  jobs:
+    displayName: Deploy
+    pool: nodepool
+    steps:
+    - task: AzureWebApp@1
+      displayName: Azure Web App Deploy
+      inputs:
+        azureSubscription: 'test-connection'
+        appType: 'webApp'
+        appName: 'nodeapppd'
+        runtimeStack: 'NODE|10.10'
+        package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+        startUpCommand: 'npm run start'
