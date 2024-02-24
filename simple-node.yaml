@@ -49,9 +49,9 @@ stages:
   displayName: Deploy stage
   dependsOn: Build
   jobs:
-    - job: Build
+    - job: Deploy
       displayName: Deploy
-      pool: nodepool
+      #pool: nodepool
       steps:
       # - task: DownloadPipelineArtifact@1
       #   inputs:
